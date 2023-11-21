@@ -75,7 +75,7 @@ namespace Agenda_Tup_Back.Controllers
         //    }
         //    //return Created("Created", dto);
         //}
- 
+
 
         [HttpPost]
         public IActionResult CreatePedido(PedidoForCreation dto)
@@ -87,10 +87,15 @@ namespace Agenda_Tup_Back.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                // Manejo de excepción
+                // Puedes hacer algo con la excepción, por ejemplo, loguearla
+                Exception inner = ex.InnerException;
+
+                // Devuelve un resultado apropiado para el error
+                return BadRequest("Error al procesar la solicitud: " + ex.Message);
             }
-            //return Created("Created", dto);
         }
+
 
 
 

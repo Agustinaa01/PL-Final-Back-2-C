@@ -51,10 +51,11 @@ builder.Services.AddCors(options =>
         });
 });
 
+
 // Cambia a SQLite
 builder.Services.AddDbContext<AgendaApiContext>(options =>
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Conexion"));
 });
 
 builder.Services.AddAuthentication("Bearer") //"Bearer" es el tipo de autenticación que tenemos que elegir después en PostMan para pasarle el token
