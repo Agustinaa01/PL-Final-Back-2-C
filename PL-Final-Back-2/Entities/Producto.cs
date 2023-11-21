@@ -18,11 +18,11 @@ namespace Agenda_Tup_Back.Entities
 
         public string ImageUrl { get; set; }
         //[JsonIgnore]
-        //public int PedidoId { get; set; }
-        //public Pedido Pedido { get; set; }
+        public int? PedidoId { get; set; }
+        public Pedido Pedido { get; set; }
         public State state { get; set; } = State.Active;
-        [JsonIgnore]
-        public ICollection<Pedido> Pedido { get; set; }
+        //[JsonIgnore]
+        //public ICollection<Pedido> Pedido { get; set; }
 
     }
 

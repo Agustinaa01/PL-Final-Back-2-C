@@ -12,7 +12,6 @@ namespace Agenda_Tup_Back.Controllers
 {
     [Route("api/[controller]")] //api/Nombre del controlador
     [ApiController]
-    [Authorize]
     public class ProductoController : ControllerBase
     {
         private readonly IProductoRepository _productoRepository;
@@ -26,18 +25,19 @@ namespace Agenda_Tup_Back.Controllers
             _mapper = autoMapper;
         }
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult GetAllProducto()
         {
-            int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);
-            return Ok(_productoRepository.GetAllProducto(userId));
+            //int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);
+            return Ok(_productoRepository.GetAllProducto());
         }
  
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public IActionResult GetProductoById(int id)
         {
             try
             {
-
                 var producto = _productoRepository.GetProductoById(id);
 
                 if (producto == null)
@@ -56,22 +56,24 @@ namespace Agenda_Tup_Back.Controllers
             }
         }
         [HttpPost]
+        [Authorize]
         public IActionResult CreateProducto(ProductoForCreation dto)
         {
             try
             {
-                int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);
-                _productoRepository.CreateProducto(dto, userId);
+                //int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);
+                _productoRepository.CreateProducto(dto);
                 return Created("Created", dto);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-            return NoContent();
+            //return NoContent();
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult UpdateProducto(int id, ProductoForCreation dto)
         {
             try
@@ -80,14 +82,14 @@ namespace Agenda_Tup_Back.Controllers
 
                 if (id != producto.Id)
                 {
-                    return NotFound();
+                    return BadRequest("The provided ID in the request body does not match the ID in the URL.");
                 }
 
                 var productoItem = _productoRepository.GetProductoById(id);
 
                 if (productoItem == null)
                 {
-                    return NotFound();
+                    return NotFound("Product not found with the specified ID.");
                 }
 
                 _productoRepository.UpdateProducto(producto);
@@ -97,8 +99,6 @@ namespace Agenda_Tup_Back.Controllers
                 var productoModificadoDto = _mapper.Map<ProductoForCreation>(productoModificado);
 
                 return Ok(productoModificadoDto);
-
-
             }
             catch (Exception ex)
             {
@@ -106,14 +106,16 @@ namespace Agenda_Tup_Back.Controllers
             }
         }
 
+
         [HttpDelete]
         [Route("{Id}")]
+        [Authorize]
         public IActionResult DeleteProductoById(int Id)
         {
             try
             {
                 var role = HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("role"));
-                if (role.Value == "Admin")
+                if (role.Value == "SuperAdmin")
                 {
                     _productoRepository.DeleteProducto(Id);
                 }

@@ -17,7 +17,7 @@ namespace Agenda_Tup_Back.Data.Repository
             _context = context;
             _mapper = autoMapper;
         }
-        public List<Producto> GetAllProducto(int id)
+        public List<Producto> GetAllProducto()
         {
             var contacts = _context.Producto
                 .ToList();
@@ -29,10 +29,10 @@ namespace Agenda_Tup_Back.Data.Repository
 
         }
         
-        public void CreateProducto(ProductoForCreation dto, int Id)
+        public void CreateProducto(ProductoForCreation dto)
         {
-            Producto contact = _mapper.Map<Producto>(dto);
-            _context.Producto.Add(contact);
+            Producto producto = _mapper.Map<Producto>(dto);
+            _context.Producto.Add(producto);
             _context.SaveChanges();
         }
 

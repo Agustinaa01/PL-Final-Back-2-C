@@ -6,9 +6,9 @@ namespace Agenda_Tup_Back.Data.Interfaces
 {
     public interface IProductoRepository
     {
-        public List<Producto> GetAllProducto(int id);
+        public List<Producto> GetAllProducto();
         public Producto GetProductoById(int Id);
-        public void CreateProducto(ProductoForCreation dto, int Id);
+        public void CreateProducto(ProductoForCreation dto);
         public void UpdateProducto(Producto producto);
         public void DeleteProducto(int Id);
         public void ArchiveProducto(int Id);

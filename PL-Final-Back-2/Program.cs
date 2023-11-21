@@ -1,4 +1,4 @@
-using Agenda_Tup_Back.Data.Repository;
+﻿using Agenda_Tup_Back.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -22,7 +22,7 @@ builder.Services.AddSwaggerGen(setupAction =>
     {
         Type = SecuritySchemeType.Http,
         Scheme = "Bearer",
-        Description = "Ac? pegar el token generado al loguearse."
+        Description = "Acá pegar el token generado al loguearse."
     });
 
     setupAction.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -33,7 +33,7 @@ builder.Services.AddSwaggerGen(setupAction =>
                 Reference = new OpenApiReference
                 {
                     Type = ReferenceType.SecurityScheme,
-                    Id = "AgendaApiBearerAuth" } //Tiene que coincidir con el id seteado arriba en la definici?n
+                    Id = "AgendaApiBearerAuth" } //Tiene que coincidir con el id seteado arriba en la definición
                 }, new List<string>() }
     });
 });
@@ -51,13 +51,14 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Cambia a SQLite
 builder.Services.AddDbContext<AgendaApiContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Conexion"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection"));
 });
 
-builder.Services.AddAuthentication("Bearer") //"Bearer" es el tipo de auntenticaci?n que tenemos que elegir despu?s en PostMan para pasarle el token
-    .AddJwtBearer(options => //Ac? definimos la configuraci?n de la autenticaci?n. le decimos qu? cosas queremos comprobar. La fecha de expiraci?n se valida por defecto.
+builder.Services.AddAuthentication("Bearer") //"Bearer" es el tipo de autenticación que tenemos que elegir después en PostMan para pasarle el token
+    .AddJwtBearer(options => //Acá definimos la configuración de la autenticación. Le decimos qué cosas queremos comprobar. La fecha de expiración se valida por defecto.
     {
         options.TokenValidationParameters = new()
         {
@@ -84,10 +85,8 @@ var mapper = config.CreateMapper();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
-builder.Services.AddScoped<IPedidoRepository, PedidoRepository>(); // Corregir aqu�
+builder.Services.AddScoped<IPedidoRepository, PedidoRepository>(); // Corregir aquí
 #endregion
-
-
 
 var app = builder.Build();
 
@@ -97,7 +96,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 
 app.UseHttpsRedirection();
 

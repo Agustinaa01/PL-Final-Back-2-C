@@ -4,7 +4,6 @@
     {
         Admin,
         User,
-        SuperAdmin,
-           
+        SuperAdmin 
     }
 }

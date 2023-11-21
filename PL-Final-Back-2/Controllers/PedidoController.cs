@@ -1,6 +1,8 @@
 ﻿
 using Agenda_Tup_Back.Data.DTO;
 using Agenda_Tup_Back.Data.Interfaces;
+using Agenda_Tup_Back.Data.Repository;
+using Agenda_Tup_Back.DTO;
 using Agenda_Tup_Back.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -59,8 +61,24 @@ namespace Agenda_Tup_Back.Controllers
             }
         }
 
+        //[HttpPost]
+        //public IActionResult CreatePedido(PedidoForCreation dto)
+        //{
+        //    try
+        //    {
+        //        _pedidoRepository.CreatePedido(dto);
+        //        return Created("Created", dto);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //    //return Created("Created", dto);
+        //}
+ 
+
         [HttpPost]
-        public IActionResult CreatePedido(PedidoForCreation dto, int id)
+        public IActionResult CreatePedido(PedidoForCreation dto)
         {
             try
             {
@@ -74,22 +92,24 @@ namespace Agenda_Tup_Back.Controllers
             return Created("Created", dto);
         }
 
+
+
         [HttpPost("AddProducto")]
-        public  IActionResult AddProducto(PedidoForUpdate dto)
+    public IActionResult AddProducto(PedidoForUpdate dto)
+    {
+        try
         {
-            try
-            {
-                _pedidoRepository.AddProducto(dto);
-                return Created("Created", dto);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _pedidoRepository.AddProducto(dto);
             return Created("Created", dto);
         }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        return Created("Created", dto);
+    }
 
-        [HttpDelete]
+    [HttpDelete]
         [Route("{Id}")]
         public IActionResult DeleteContactsById(int Id)
         {
