@@ -17,7 +17,7 @@ namespace Agenda_Tup_Back.Entities
         public string Brand { get; set; }
 
         public string ImageUrl { get; set; }
-        //[JsonIgnore]
+        [JsonIgnore]
         public int? PedidoId { get; set; }
         public Pedido Pedido { get; set; }
         public State state { get; set; } = State.Active;

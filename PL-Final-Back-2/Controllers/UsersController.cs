@@ -14,7 +14,6 @@ namespace Agenda_Tup_Back.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -24,6 +23,7 @@ namespace Agenda_Tup_Back.Controllers
             _userRepository = userRepository;
         }
         [HttpGet]
+        [Authorize]
         public IActionResult GetAllUser()
         {
             return Ok(_userRepository.GetAllUsers());
@@ -31,6 +31,7 @@ namespace Agenda_Tup_Back.Controllers
 
         [HttpGet]
         [Route("{Id}")]
+        [Authorize]
         public IActionResult GetUserById(int Id)
         {
 
@@ -45,6 +46,7 @@ namespace Agenda_Tup_Back.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult CreateUser(UserForCreation dto)
         {
             try
@@ -61,6 +63,7 @@ namespace Agenda_Tup_Back.Controllers
 
         [HttpDelete]
         [Route("{Id}")]
+        [Authorize]
         public IActionResult DeleteUsersById(int Id)
         {
             try

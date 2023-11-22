@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Agenda_Tup_Back.Data
 {
-    public class AgendaApiContext : DbContext
+    public class EcommerceApiContext : DbContext
     {
         public DbSet<User> User { get; set; }
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Pedido> Pedido { get; set; }
-        public AgendaApiContext(DbContextOptions<AgendaApiContext> options) : base(options)
+        public EcommerceApiContext(DbContextOptions<EcommerceApiContext> options) : base(options)
         {
 
         }

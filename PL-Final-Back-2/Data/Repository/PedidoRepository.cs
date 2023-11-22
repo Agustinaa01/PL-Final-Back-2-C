@@ -14,9 +14,9 @@ namespace Agenda_Tup_Back.Data.Repository
 {
     public class PedidoRepository : IPedidoRepository
     {
-        private readonly AgendaApiContext _context;
+        private readonly EcommerceApiContext _context;
         private readonly IMapper _mapper;
-        public PedidoRepository(AgendaApiContext context, IMapper autoMapper)
+        public PedidoRepository(EcommerceApiContext context, IMapper autoMapper)
         {
             _context = context;
             _mapper = autoMapper;

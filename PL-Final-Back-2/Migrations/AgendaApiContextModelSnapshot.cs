@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace PLFinalBack2.Migrations
 {
-    [DbContext(typeof(AgendaApiContext))]
+    [DbContext(typeof(EcommerceApiContext))]
     partial class AgendaApiContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

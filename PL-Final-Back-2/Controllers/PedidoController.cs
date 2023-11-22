@@ -100,21 +100,21 @@ namespace Agenda_Tup_Back.Controllers
 
 
         [HttpPost("AddProducto")]
-    public IActionResult AddProducto(PedidoForUpdate dto)
-    {
-        try
+        public IActionResult AddProducto(PedidoForUpdate dto)
         {
-            _pedidoRepository.AddProducto(dto);
+            try
+            {
+                _pedidoRepository.AddProducto(dto);
+                return Created("Created", dto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
             return Created("Created", dto);
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-        return Created("Created", dto);
-    }
 
-    [HttpDelete]
+        [HttpDelete]
         [Route("{Id}")]
         public IActionResult DeleteContactsById(int Id)
         {

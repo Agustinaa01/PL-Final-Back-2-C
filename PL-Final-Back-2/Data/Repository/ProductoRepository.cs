@@ -10,9 +10,9 @@ namespace Agenda_Tup_Back.Data.Repository
 {
     public class ProductoRepository: IProductoRepository
     {
-        private readonly AgendaApiContext _context;
+        private readonly EcommerceApiContext _context;
         private readonly IMapper _mapper;
-        public ProductoRepository(AgendaApiContext context, IMapper autoMapper)
+        public ProductoRepository(EcommerceApiContext context, IMapper autoMapper)
         {
             _context = context;
             _mapper = autoMapper;

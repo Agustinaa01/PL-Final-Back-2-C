@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace PLFinalBack2.Migrations
 {
-    [DbContext(typeof(AgendaApiContext))]
-    [Migration("20231121224254_initial")]
+    [DbContext(typeof(EcommerceApiContext))]
+    [Migration("20231121233826_initial")]
     partial class initial
     {
         /// <inheritdoc />

@@ -8,9 +8,9 @@ namespace Agenda_Tup_Back.Data.Repository.Implementations
 {
     public class UserRepository : IUserRepository
     {
-        private readonly AgendaApiContext _context;
+        private readonly EcommerceApiContext _context;
         private readonly IMapper _mapper;
-        public UserRepository(AgendaApiContext context, IMapper autoMapper)
+        public UserRepository(EcommerceApiContext context, IMapper autoMapper)
         { 
             _context = context;
             _mapper = autoMapper;
