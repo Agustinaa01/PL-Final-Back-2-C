@@ -17,10 +17,12 @@ namespace Agenda_Tup_Back.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public UsersController(IUserRepository userRepository) //en el contructor de dicha entre parentesis 
+        public UsersController(IUserRepository userRepository, IMapper autoMapper) //en el contructor de dicha entre parentesis 
         {
             _userRepository = userRepository;
+            _mapper = autoMapper;
         }
         [HttpGet]
         [Authorize]
@@ -60,6 +62,39 @@ namespace Agenda_Tup_Back.Controllers
             return Created("Created", dto);
         }
 
+        [HttpPut("{id}")]
+        [Authorize]
+        public IActionResult UpdateUser(int id, UserForCreation dto)
+        {
+            try
+            {
+                var user = _mapper.Map<User>(dto);
+
+                if (id != user.Id)
+                {
+                    return BadRequest("The provided ID in the request body does not match the ID in the URL.");
+                }
+
+                var userItem = _userRepository.GetUserById(id);
+
+                if (userItem == null)
+                {
+                    return NotFound("Product not found with the specified ID.");
+                }
+
+                _userRepository.UpdateUser(user);
+
+                var userModificado = _userRepository.GetUserById(id);
+
+                var userModificadoDto = _mapper.Map<UserForCreation>(userModificado);
+
+                return Ok(userModificadoDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpDelete]
         [Route("{Id}")]

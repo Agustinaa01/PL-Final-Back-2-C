@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -35,7 +36,7 @@ namespace PLFinalBack2.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -91,7 +92,9 @@ namespace PLFinalBack2.Migrations
                 {
                     { 1, "ericaGomez@gmail.com", "Erica", "123abc", 0, 0 },
                     { 2, "danaMolina@gmail.com", "Dana", "456def", 1, 0 },
-                    { 3, "anaMolina@gmail.com", "Ana", "456def", 2, 0 }
+                    { 3, "agus@back.com", "Agus", "user123", 2, 0 },
+                    { 4, "bren@back.com", "Bren", "user123", 2, 0 },
+                    { 5, "lucho@back.com", "Lucho", "user123", 2, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -99,8 +102,8 @@ namespace PLFinalBack2.Migrations
                 columns: new[] { "Id", "Date", "State", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Familia", "Reunión familiar", 2 },
-                    { 2, "Amigos", "Clases de Matemática a las 17:30hs", 1 }
+                    { 1, new DateTime(2023, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Shipping", 2 },
+                    { 2, new DateTime(2023, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Delivered", 1 }
                 });
 
             migrationBuilder.CreateIndex(

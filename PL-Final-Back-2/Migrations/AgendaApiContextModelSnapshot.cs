@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace PLFinalBack2.Migrations
 {
-    [DbContext(typeof(EcommerceApiContext))]
+    [DbContext(typeof(AgendaApiContext))]
     partial class AgendaApiContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -30,9 +30,8 @@ namespace PLFinalBack2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Date")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -51,15 +50,15 @@ namespace PLFinalBack2.Migrations
                         new
                         {
                             Id = 1,
-                            Date = "Familia",
-                            State = "Reunión familiar",
+                            Date = new DateTime(2023, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            State = "Shipping",
                             UserId = 2
                         },
                         new
                         {
                             Id = 2,
-                            Date = "Amigos",
-                            State = "Clases de Matemática a las 17:30hs",
+                            Date = new DateTime(2023, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            State = "Delivered",
                             UserId = 1
                         });
                 });
@@ -183,9 +182,27 @@ namespace PLFinalBack2.Migrations
                         new
                         {
                             Id = 3,
-                            Email = "anaMolina@gmail.com",
-                            Name = "Ana",
-                            Password = "456def",
+                            Email = "agus@back.com",
+                            Name = "Agus",
+                            Password = "user123",
+                            Rol = 2,
+                            state = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "bren@back.com",
+                            Name = "Bren",
+                            Password = "user123",
+                            Rol = 2,
+                            state = 0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Email = "lucho@back.com",
+                            Name = "Lucho",
+                            Password = "user123",
                             Rol = 2,
                             state = 0
                         });

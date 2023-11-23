@@ -1,12 +1,12 @@
 ﻿
+
 using Agenda_Tup_Back.Data.DTO;
 using Agenda_Tup_Back.Data.Interfaces;
-using Agenda_Tup_Back.Data.Repository;
-using Agenda_Tup_Back.DTO;
 using Agenda_Tup_Back.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Agenda_Tup_Back.Controllers
 {
@@ -46,14 +46,13 @@ namespace Agenda_Tup_Back.Controllers
 
         }
 
-
         [HttpGet]
         [Route("{Id}")]
-        public IActionResult GetPedidoById(int Id)
+        public IActionResult GetPedidosByUserId(int Id)
         {
             try
             {
-                return Ok(_pedidoRepository.GetPedidoById(Id));
+                return Ok(_pedidoRepository.GetPedidosByUserId(Id));
             }
             catch (Exception ex)
             {
@@ -95,8 +94,6 @@ namespace Agenda_Tup_Back.Controllers
                 return BadRequest("Error al procesar la solicitud: " + ex.Message);
             }
         }
-
-
 
 
         [HttpPost("AddProducto")]

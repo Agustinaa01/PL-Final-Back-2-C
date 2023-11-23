@@ -3,13 +3,12 @@ using Agenda_Tup_Back.Models.Enum;
 
 namespace Agenda_Tup_Back.DTO
 {
-    public class UserForCreation
+    public class UserForGet
     {
-        [Required]
+        public int Id { get; set; }
         public string Name { get; set; }
-        [Required]
         public string Email { get; set; }
+        public Rol Rol { get; set; }
 
-        public string Password { get; set; }
     }
 }

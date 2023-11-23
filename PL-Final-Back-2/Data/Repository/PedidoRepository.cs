@@ -14,9 +14,9 @@ namespace Agenda_Tup_Back.Data.Repository
 {
     public class PedidoRepository : IPedidoRepository
     {
-        private readonly EcommerceApiContext _context;
+        private readonly AgendaApiContext _context;
         private readonly IMapper _mapper;
-        public PedidoRepository(EcommerceApiContext context, IMapper autoMapper)
+        public PedidoRepository(AgendaApiContext context, IMapper autoMapper)
         {
             _context = context;
             _mapper = autoMapper;
@@ -27,7 +27,7 @@ namespace Agenda_Tup_Back.Data.Repository
                 .ToList();
             return pedido;
         }
-  
+
         //public async Task<IActionResult> GetPedidos(int id)
         //{
         //    var pedidos = await _context.Pedido.Include(p => p.Producto).ToListAsync();
@@ -48,13 +48,15 @@ namespace Agenda_Tup_Back.Data.Repository
         //    return _context.Groups.ToList();
         //}
 
-        public Pedido? GetPedidoById(int Id)
+        public List<Pedido>? GetPedidosByUserId(int Id)
         {
-            var pedido = _context.Pedido
+            var pedidos = _context.Pedido
                 .Include(c => c.Producto)
-                .SingleOrDefault(u => u.Id == Id);
-            return pedido;
+                .Where(u => u.UserId == Id)
+                .ToList();
+            return pedidos;
         }
+
         //public void CreatePedido(PedidoForCreation dto)
         //{
         //    _context.Pedido.Add(_mapper.Map<Pedido>(dto));

@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Agenda_Tup_Back.Data
 {
-    public class EcommerceApiContext : DbContext
+    public class AgendaApiContext : DbContext
     {
         public DbSet<User> User { get; set; }
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Pedido> Pedido { get; set; }
-        public EcommerceApiContext(DbContextOptions<EcommerceApiContext> options) : base(options)
+        public AgendaApiContext(DbContextOptions<AgendaApiContext> options) : base(options)
         {
 
         }
@@ -34,29 +34,44 @@ namespace Agenda_Tup_Back.Data
                 Email = "danaMolina@gmail.com",
             };
 
-            User Ana = new User()
+            User Agus = new User()
             {
                 Id = 3,
-                Name = "Ana",
-                Password = "456def",
-                Email = "anaMolina@gmail.com",
+                Name = "Agus",
+                Password = "user123",
+                Email = "agus@back.com",
                 Rol = Rol.SuperAdmin,
             };
-
-            Pedido Familia = new Pedido()
+            User Bren = new User()
+            {
+                Id = 4,
+                Name = "Bren",
+                Password = "user123",
+                Email = "bren@back.com",
+                Rol = Rol.SuperAdmin,
+            };
+            User Lucho = new User()
+            {
+                Id = 5,
+                Name = "Lucho",
+                Password = "user123",
+                Email = "lucho@back.com",
+                Rol = Rol.SuperAdmin,
+            };
+            Pedido PedidoUser1 = new Pedido()
             {
                 Id = 1,
-                Date = "Familia",
-                State = "Reunión familiar",
+                Date = new DateTime(2023, 11, 10),
+                State = "Shipping",
                 UserId = Dana.Id,
                 //Producto = new List<Producto>(),
             };
 
-            Pedido Amigos = new Pedido()
+            Pedido PedidoUser2= new Pedido()
             {
                 Id = 2,
-                Date = "Amigos",
-                State = "Clases de Matemática a las 17:30hs",
+                Date = new DateTime(2023, 11, 22),
+                State = "Delivered",
                 UserId= Erica.Id,
                 //Producto = new List<Producto>(),
             };
@@ -85,8 +100,8 @@ namespace Agenda_Tup_Back.Data
 
             
             // Agregar entidades al modelo (sin relaciones)
-            modelBuilder.Entity<User>().HasData(Erica, Dana, Ana);
-            modelBuilder.Entity<Pedido>().HasData(Familia, Amigos);
+            modelBuilder.Entity<User>().HasData(Erica, Dana, Agus, Bren, Lucho);
+            modelBuilder.Entity<Pedido>().HasData(PedidoUser1, PedidoUser2);
             modelBuilder.Entity<Producto>().HasData(Computadoras, Auriculares);
 
             modelBuilder.Entity<User>().HasMany(u => u.Pedido).WithOne(p => p.User);

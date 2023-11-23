@@ -9,7 +9,7 @@ namespace Agenda_Tup_Back.Entities
         //[Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public string State { get; set; }
         [JsonIgnore]
         public ICollection<Producto> Producto { get; set; } = new List<Producto>();
