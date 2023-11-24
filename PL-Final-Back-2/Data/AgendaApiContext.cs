@@ -58,26 +58,23 @@ namespace Agenda_Tup_Back.Data
                 Email = "lucho@back.com",
                 Rol = Rol.SuperAdmin,
             };
-            Pedido PedidoUser1 = new Pedido()
+            modelBuilder.Entity<Pedido>().HasData(new Pedido
             {
                 Id = 1,
                 Date = new DateTime(2023, 11, 10),
                 State = "Shipping",
-                UserId = Dana.Id,
-                //Producto = new List<Producto>(),
-            };
+                UserId = Agus.Id,
+            });
 
-            Pedido PedidoUser2= new Pedido()
+            modelBuilder.Entity<Pedido>().HasData(new Pedido
             {
                 Id = 2,
                 Date = new DateTime(2023, 11, 22),
                 State = "Delivered",
-                UserId= Erica.Id,
-                //Producto = new List<Producto>(),
-            };
-
-            Producto Computadoras = new Producto()
-            {
+                UserId = Agus.Id,
+             });
+            
+            modelBuilder.Entity<Producto>().HasData(new Producto {
                 Id = 1,
                 Name = "Computadora",
                 Price = 1515,
@@ -85,10 +82,9 @@ namespace Agenda_Tup_Back.Data
                 Category = "Computadora",
                 Brand = "HP",
                 ImageUrl = "https://i.pinimg.com/564x/5a/62/1e/5a621e11a8cc9fd152d6805cd5f67724.jpg",
-            };
-
-            Producto Auriculares = new Producto()
-            {
+                PedidoId = 1,
+            });
+            modelBuilder.Entity<Producto>().HasData(new Producto {
                 Id = 2,
                 Name = "Auriculares",
                 Price = 1545,
@@ -96,16 +92,16 @@ namespace Agenda_Tup_Back.Data
                 Category = "Auriculares",
                 Brand = "HP",
                 ImageUrl = "https://i.pinimg.com/564x/f2/99/42/f29942dc13ba97a29d27ff47f83ec36e.jpg",
-            };
+                PedidoId = 2,
+            });
 
-            
             // Agregar entidades al modelo (sin relaciones)
             modelBuilder.Entity<User>().HasData(Erica, Dana, Agus, Bren, Lucho);
-            modelBuilder.Entity<Pedido>().HasData(PedidoUser1, PedidoUser2);
-            modelBuilder.Entity<Producto>().HasData(Computadoras, Auriculares);
+            //modelBuilder.Entity<Pedido>().HasData(PedidoUser1, PedidoUser2);
+           //modelBuilder.Entity<Producto>().HasData(Computadoras, Auriculares);
 
             modelBuilder.Entity<User>().HasMany(u => u.Pedido).WithOne(p => p.User);
-            modelBuilder.Entity<Pedido>().HasMany(p => p.Producto).WithOne(pr => pr.Pedido).IsRequired(false);
+            modelBuilder.Entity<Pedido>().HasMany(p => p.Producto).WithOne(pr => pr.Pedido).IsRequired(false).OnDelete(DeleteBehavior.SetNull);
 
             base.OnModelCreating(modelBuilder);
         }

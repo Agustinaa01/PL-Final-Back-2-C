@@ -11,7 +11,7 @@ namespace Agenda_Tup_Back.Entities
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public string State { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public ICollection<Producto> Producto { get; set; } = new List<Producto>();
         //public ICollection<User> User { get; set; }
         

@@ -4,6 +4,7 @@ using Agenda_Tup_Back.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PLFinalBack2.Migrations
 {
     [DbContext(typeof(AgendaApiContext))]
-    partial class AgendaApiContextModelSnapshot : ModelSnapshot
+    [Migration("20231124010318_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,7 +229,7 @@ namespace PLFinalBack2.Migrations
                     b.HasOne("Agenda_Tup_Back.Entities.Pedido", "Pedido")
                         .WithMany("Producto")
                         .HasForeignKey("PedidoId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Pedido");
                 });

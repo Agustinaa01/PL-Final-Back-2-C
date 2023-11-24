@@ -28,26 +28,6 @@ namespace Agenda_Tup_Back.Data.Repository
             return pedido;
         }
 
-        //public async Task<IActionResult> GetPedidos(int id)
-        //{
-        //    var pedidos = await _context.Pedido.Include(p => p.Producto).ToListAsync();
-
-        //    var jsonSettings = new JsonSerializerOptions
-        //    {
-        //        ReferenceHandler = ReferenceHandler.Preserve,
-        //        // Otros ajustes según sea necesario
-        //    };
-
-        //    var jsonResult = JsonSerializer.Serialize(pedidos, jsonSettings);
-
-        //    return Ok(jsonResult);
-        //}
-
-        //public List<Pedido> GetAllGroupsNames(int id)
-        //{
-        //    return _context.Groups.ToList();
-        //}
-
         public List<Pedido>? GetPedidosByUserId(int Id)
         {
             var pedidos = _context.Pedido
@@ -57,11 +37,6 @@ namespace Agenda_Tup_Back.Data.Repository
             return pedidos;
         }
 
-        //public void CreatePedido(PedidoForCreation dto)
-        //{
-        //    _context.Pedido.Add(_mapper.Map<Pedido>(dto));
-        //    _context.SaveChanges();
-        //}
         public void CreatePedido(PedidoForCreation dto)
         {
             _context.Pedido.Add(_mapper.Map<Pedido>(dto));
@@ -103,9 +78,13 @@ namespace Agenda_Tup_Back.Data.Repository
 
         public void DeletePedido(int Id)
         {
-            _context.Pedido.Remove(_context.Pedido.Single(c => c.Id == Id));
+            var pedido = _context.Pedido.Single(c => c.Id == Id);
+
+            _context.Pedido.Remove(pedido);
+
             _context.SaveChanges();
         }
+
 
     }
 

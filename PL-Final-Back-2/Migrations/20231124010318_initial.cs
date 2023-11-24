@@ -73,16 +73,8 @@ namespace PLFinalBack2.Migrations
                         name: "FK_Producto_Pedido_PedidoId",
                         column: x => x.PedidoId,
                         principalTable: "Pedido",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.InsertData(
-                table: "Producto",
-                columns: new[] { "Id", "Brand", "Category", "Description", "ImageUrl", "Name", "PedidoId", "Price", "state" },
-                values: new object[,]
-                {
-                    { 1, "HP", "Computadora", "gagagagab", "https://i.pinimg.com/564x/5a/62/1e/5a621e11a8cc9fd152d6805cd5f67724.jpg", "Computadora", null, 1515, 0 },
-                    { 2, "HP", "Auriculares", "gagagagab", "https://i.pinimg.com/564x/f2/99/42/f29942dc13ba97a29d27ff47f83ec36e.jpg", "Auriculares", null, 1545, 0 }
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -102,8 +94,17 @@ namespace PLFinalBack2.Migrations
                 columns: new[] { "Id", "Date", "State", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Shipping", 2 },
-                    { 2, new DateTime(2023, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Delivered", 1 }
+                    { 1, new DateTime(2023, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Shipping", 3 },
+                    { 2, new DateTime(2023, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Delivered", 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Producto",
+                columns: new[] { "Id", "Brand", "Category", "Description", "ImageUrl", "Name", "PedidoId", "Price", "state" },
+                values: new object[,]
+                {
+                    { 1, "HP", "Computadora", "gagagagab", "https://i.pinimg.com/564x/5a/62/1e/5a621e11a8cc9fd152d6805cd5f67724.jpg", "Computadora", 1, 1515, 0 },
+                    { 2, "HP", "Auriculares", "gagagagab", "https://i.pinimg.com/564x/f2/99/42/f29942dc13ba97a29d27ff47f83ec36e.jpg", "Auriculares", 2, 1545, 0 }
                 });
 
             migrationBuilder.CreateIndex(

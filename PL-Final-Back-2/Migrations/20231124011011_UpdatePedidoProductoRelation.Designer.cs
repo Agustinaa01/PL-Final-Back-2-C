@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PLFinalBack2.Migrations
 {
     [DbContext(typeof(AgendaApiContext))]
-    [Migration("20231123023042_initial")]
-    partial class initial
+    [Migration("20231124011011_UpdatePedidoProductoRelation")]
+    partial class UpdatePedidoProductoRelation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,14 +55,14 @@ namespace PLFinalBack2.Migrations
                             Id = 1,
                             Date = new DateTime(2023, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             State = "Shipping",
-                            UserId = 2
+                            UserId = 3
                         },
                         new
                         {
                             Id = 2,
                             Date = new DateTime(2023, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             State = "Delivered",
-                            UserId = 1
+                            UserId = 3
                         });
                 });
 
@@ -118,6 +118,7 @@ namespace PLFinalBack2.Migrations
                             Description = "gagagagab",
                             ImageUrl = "https://i.pinimg.com/564x/5a/62/1e/5a621e11a8cc9fd152d6805cd5f67724.jpg",
                             Name = "Computadora",
+                            PedidoId = 1,
                             Price = 1515,
                             state = 0
                         },
@@ -129,6 +130,7 @@ namespace PLFinalBack2.Migrations
                             Description = "gagagagab",
                             ImageUrl = "https://i.pinimg.com/564x/f2/99/42/f29942dc13ba97a29d27ff47f83ec36e.jpg",
                             Name = "Auriculares",
+                            PedidoId = 2,
                             Price = 1545,
                             state = 0
                         });
@@ -226,7 +228,8 @@ namespace PLFinalBack2.Migrations
                 {
                     b.HasOne("Agenda_Tup_Back.Entities.Pedido", "Pedido")
                         .WithMany("Producto")
-                        .HasForeignKey("PedidoId");
+                        .HasForeignKey("PedidoId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Pedido");
                 });
