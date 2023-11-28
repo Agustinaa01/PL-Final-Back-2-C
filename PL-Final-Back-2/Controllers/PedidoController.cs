@@ -13,7 +13,7 @@ namespace Agenda_Tup_Back.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+
     public class PedidoController : ControllerBase
     {
         private readonly IPedidoRepository _pedidoRepository;
@@ -59,6 +59,7 @@ namespace Agenda_Tup_Back.Controllers
 
         [HttpGet]
         [Route("{Id}")]
+
         public IActionResult GetPedidosByUserId(int Id)
         {
             try

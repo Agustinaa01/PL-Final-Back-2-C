@@ -52,24 +52,30 @@ namespace Agenda_Tup_Back.Data.Repository
 
             return newPedido;
         }
-
         public void AddProducto(PedidoForUpdate dto)
         {
-            var producto = _context.Producto
-                .Where(p => p.Id == dto.ProductoId)
-                .FirstOrDefault();
+            var pedido = _context.Pedido.Include(p => p.PedidoProductos).FirstOrDefault(p => p.Id == dto.PedidoId);
 
-            var pedido = _context.Pedido.Find(dto.PedidoId);
-
-            if (producto != null && pedido != null)
+            if (pedido != null)
             {
-                var pedidoProducto = _mapper.Map<PedidoProducto>(dto);
-                pedido.PedidoProductos.Add(pedidoProducto);
-                producto.PedidoProductos.Add(pedidoProducto);
+                var productos = _context.Producto.Where(p => dto.ProductoId.Contains(p.Id)).ToList();
+
+                foreach (var producto in productos)
+                {
+                    var pedidoProducto = new PedidoProducto
+                    {
+                        PedidoId = dto.PedidoId,
+                        ProductoId = producto.Id
+                    };
+
+                    pedido.PedidoProductos.Add(pedidoProducto);
+                }
 
                 _context.SaveChanges();
             }
         }
+
+
 
 
 

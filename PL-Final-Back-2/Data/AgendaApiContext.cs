@@ -11,8 +11,9 @@ public class AgendaApiContext : DbContext
 
     public AgendaApiContext(DbContextOptions<AgendaApiContext> options) : base(options)
     {
-
+        this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -47,7 +48,8 @@ public class AgendaApiContext : DbContext
         modelBuilder.Entity<PedidoProducto>()
             .HasOne(pp => pp.Pedido)
             .WithMany(p => p.PedidoProductos)
-            .HasForeignKey(pp => pp.PedidoId);
+            .HasForeignKey(pp => pp.PedidoId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<PedidoProducto>()
             .HasOne(pp => pp.Producto)
