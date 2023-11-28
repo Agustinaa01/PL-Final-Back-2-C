@@ -28,31 +28,31 @@ namespace Agenda_Tup_Back.Data.Repository
             return pedido;
         }
 
-        public List<Pedido>? GetPedidosByUserId(int Id)
+        public List<PedidoDto> GetPedidosByUserId(int userId)
         {
             var pedidos = _context.Pedido
-                .Include(c => c.Producto)
-                .Where(u => u.UserId == Id)
+                .Include(p => p.PedidoProductos)
+                    .ThenInclude(pp => pp.Producto) // Include the related Producto entity
+                .Where(p => p.UserId == userId)
                 .ToList();
-            return pedidos;
+
+            return _mapper.Map<List<PedidoDto>>(pedidos);
         }
 
-        public void CreatePedido(PedidoForCreation dto)
+        public Pedido? GetPedido(int id)
         {
-            _context.Pedido.Add(_mapper.Map<Pedido>(dto));
-            _context.SaveChanges();
+            return _context.Pedido.SingleOrDefault(u => u.Id == id);
         }
 
-        //public void AddProducto(PedidoForUpdate dto)
-        //{
-        //    var contact = _context.Producto
-        //        .Where(c => c.Id == dto.ProductoId)
-        //        .Include(c => c.Pedido)
-        //        .FirstOrDefault();
-        //    var group = _context.Pedido.Find(dto.PedidoId);
-        //    contact.Pedido.Add(group);
-        //    _context.SaveChanges();
-        //}
+        public Pedido CreatePedido(PedidoForCreation dto)
+        {
+            var newPedido = _mapper.Map<Pedido>(dto);
+            _context.Pedido.Add(newPedido);
+            _context.SaveChanges();
+
+            return newPedido;
+        }
+
         public void AddProducto(PedidoForUpdate dto)
         {
             var producto = _context.Producto
@@ -63,18 +63,15 @@ namespace Agenda_Tup_Back.Data.Repository
 
             if (producto != null && pedido != null)
             {
-                // Asigna el PedidoId al Producto
-                producto.PedidoId = pedido.Id;
-
-                // Añade el producto al pedido (si no está ya presente)
-                if (!pedido.Producto.Any(p => p.Id == producto.Id))
-                {
-                    pedido.Producto.Add(producto);
-                }
+                var pedidoProducto = _mapper.Map<PedidoProducto>(dto);
+                pedido.PedidoProductos.Add(pedidoProducto);
+                producto.PedidoProductos.Add(pedidoProducto);
 
                 _context.SaveChanges();
             }
         }
+
+
 
         public void DeletePedido(int Id)
         {

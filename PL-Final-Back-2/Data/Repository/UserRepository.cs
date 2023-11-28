@@ -11,7 +11,7 @@ namespace Agenda_Tup_Back.Data.Repository.Implementations
         private readonly AgendaApiContext _context;
         private readonly IMapper _mapper;
         public UserRepository(AgendaApiContext context, IMapper autoMapper)
-        { 
+        {                   
             _context = context;
             _mapper = autoMapper;
         }

@@ -14,6 +14,25 @@ namespace PLFinalBack2.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Producto",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    state = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Producto", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -52,29 +71,36 @@ namespace PLFinalBack2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Producto",
+                name: "PedidoProductos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PedidoId = table.Column<int>(type: "int", nullable: true),
-                    state = table.Column<int>(type: "int", nullable: false)
+                    PedidoId = table.Column<int>(type: "int", nullable: false),
+                    ProductoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Producto", x => x.Id);
+                    table.PrimaryKey("PK_PedidoProductos", x => new { x.PedidoId, x.ProductoId });
                     table.ForeignKey(
-                        name: "FK_Producto_Pedido_PedidoId",
+                        name: "FK_PedidoProductos_Pedido_PedidoId",
                         column: x => x.PedidoId,
                         principalTable: "Pedido",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PedidoProductos_Producto_ProductoId",
+                        column: x => x.ProductoId,
+                        principalTable: "Producto",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Producto",
+                columns: new[] { "Id", "Brand", "Category", "Description", "ImageUrl", "Name", "Price", "state" },
+                values: new object[,]
+                {
+                    { 1, "HP", "Computadora", "gagagagab", "https://i.pinimg.com/564x/5a/62/1e/5a621e11a8cc9fd152d6805cd5f67724.jpg", "Computadora", 1515, 0 },
+                    { 2, "HP", "Auriculares", "gagagagab", "https://i.pinimg.com/564x/f2/99/42/f29942dc13ba97a29d27ff47f83ec36e.jpg", "Auriculares", 1545, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -99,12 +125,14 @@ namespace PLFinalBack2.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Producto",
-                columns: new[] { "Id", "Brand", "Category", "Description", "ImageUrl", "Name", "PedidoId", "Price", "state" },
+                table: "PedidoProductos",
+                columns: new[] { "PedidoId", "ProductoId" },
                 values: new object[,]
                 {
-                    { 1, "HP", "Computadora", "gagagagab", "https://i.pinimg.com/564x/5a/62/1e/5a621e11a8cc9fd152d6805cd5f67724.jpg", "Computadora", 1, 1515, 0 },
-                    { 2, "HP", "Auriculares", "gagagagab", "https://i.pinimg.com/564x/f2/99/42/f29942dc13ba97a29d27ff47f83ec36e.jpg", "Auriculares", 2, 1545, 0 }
+                    { 1, 1 },
+                    { 1, 2 },
+                    { 2, 1 },
+                    { 2, 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -113,19 +141,22 @@ namespace PLFinalBack2.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Producto_PedidoId",
-                table: "Producto",
-                column: "PedidoId");
+                name: "IX_PedidoProductos_ProductoId",
+                table: "PedidoProductos",
+                column: "ProductoId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Producto");
+                name: "PedidoProductos");
 
             migrationBuilder.DropTable(
                 name: "Pedido");
+
+            migrationBuilder.DropTable(
+                name: "Producto");
 
             migrationBuilder.DropTable(
                 name: "User");

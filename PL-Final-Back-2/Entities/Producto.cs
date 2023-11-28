@@ -7,7 +7,6 @@ namespace Agenda_Tup_Back.Entities
 {
     public class Producto
     {
-        //[Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
@@ -17,14 +16,11 @@ namespace Agenda_Tup_Back.Entities
         public string Brand { get; set; }
 
         public string ImageUrl { get; set; }
-        [JsonIgnore]
-        public int? PedidoId { get; set; }
-        [JsonIgnore]
-        public Pedido Pedido { get; set; }
         public State state { get; set; } = State.Active;
-        //[JsonIgnore]
-        //public ICollection<Pedido> Pedido { get; set; }
 
+        // This should be a collection of PedidoProducto
+        [JsonIgnore]
+        public ICollection<PedidoProducto> PedidoProductos { get; set; } = new List<PedidoProducto>();
     }
 
 }

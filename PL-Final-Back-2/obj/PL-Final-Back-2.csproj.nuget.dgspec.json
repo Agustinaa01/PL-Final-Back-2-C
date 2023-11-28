@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\agust\\source\\repos\\PL-Final-Back-2\\PL-Final-Back-2\\PL-Final-Back-2.csproj": {}
+    "C:\\Users\\Usuario\\PL-Final-Back-2-C\\PL-Final-Back-2\\PL-Final-Back-2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\agust\\source\\repos\\PL-Final-Back-2\\PL-Final-Back-2\\PL-Final-Back-2.csproj": {
+    "C:\\Users\\Usuario\\PL-Final-Back-2-C\\PL-Final-Back-2\\PL-Final-Back-2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\agust\\source\\repos\\PL-Final-Back-2\\PL-Final-Back-2\\PL-Final-Back-2.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\PL-Final-Back-2-C\\PL-Final-Back-2\\PL-Final-Back-2.csproj",
         "projectName": "PL-Final-Back-2",
-        "projectPath": "C:\\Users\\agust\\source\\repos\\PL-Final-Back-2\\PL-Final-Back-2\\PL-Final-Back-2.csproj",
-        "packagesPath": "C:\\Users\\agust\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\agust\\source\\repos\\PL-Final-Back-2\\PL-Final-Back-2\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\PL-Final-Back-2-C\\PL-Final-Back-2\\PL-Final-Back-2.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\PL-Final-Back-2-C\\PL-Final-Back-2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\agust\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

@@ -2,6 +2,7 @@
 
 using Agenda_Tup_Back.Data.DTO;
 using Agenda_Tup_Back.Data.Interfaces;
+using Agenda_Tup_Back.Data.Repository.Implementations;
 using Agenda_Tup_Back.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -29,22 +30,32 @@ namespace Agenda_Tup_Back.Controllers
         //    int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);
         //    return Ok(_pedidoRepository.GetAllPedido(userId));
 
-        //}
-
         [HttpGet("pedido")]
         public IActionResult GetAllPedido()
         {
             try
             {
-                int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);
+                if (!HttpContext.User.Identity.IsAuthenticated)
+                {
+                    return Unauthorized("User is not authenticated.");
+                }
+
+                var claim = HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier"));
+                if (claim == null)
+                {
+                    return BadRequest("No claim containing 'nameidentifier' found.");
+                }
+
+                int userId = Int32.Parse(claim.Value);
                 return Ok(_pedidoRepository.GetAllPedido(userId));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
         }
+
+
 
         [HttpGet]
         [Route("{Id}")]
@@ -59,30 +70,26 @@ namespace Agenda_Tup_Back.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        //[HttpPost]
-        //public IActionResult CreatePedido(PedidoForCreation dto)
-        //{
-        //    try
-        //    {
-        //        _pedidoRepository.CreatePedido(dto);
-        //        return Created("Created", dto);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //    //return Created("Created", dto);
-        //}
-
-
+        [HttpGet]
+        [Route("GetPedido/{Id}")]
+        public IActionResult GetPedido(int id)
+        {
+            try
+            {
+                return Ok(_pedidoRepository.GetPedido(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPost]
         public IActionResult CreatePedido(PedidoForCreation dto)
         {
             try
             {
-                _pedidoRepository.CreatePedido(dto);
-                return Created("Created", dto);
+                var newPedido = _pedidoRepository.CreatePedido(dto);
+                return Created("Created", newPedido);
             }
             catch (Exception ex)
             {
@@ -94,6 +101,7 @@ namespace Agenda_Tup_Back.Controllers
                 return BadRequest("Error al procesar la solicitud: " + ex.Message);
             }
         }
+
 
 
         [HttpPost("AddProducto")]
