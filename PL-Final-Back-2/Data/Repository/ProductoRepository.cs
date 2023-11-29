@@ -49,9 +49,11 @@ namespace Agenda_Tup_Back.Data.Repository
                 productoItem.Brand = producto.Brand;
                 productoItem.ImageUrl = producto.ImageUrl;
 
+                _context.Producto.Update(productoItem);
                 _context.SaveChanges();
             }
         }
+
         public void DeleteProducto(int Id)
         {
             _context.Producto.Remove(_context.Producto.Single(c => c.Id == Id));

@@ -16,6 +16,7 @@ namespace Agenda_Tup_Back.Data.Repository
     {
         private readonly AgendaApiContext _context;
         private readonly IMapper _mapper;
+
         public PedidoRepository(AgendaApiContext context, IMapper autoMapper)
         {
             _context = context;
@@ -52,29 +53,31 @@ namespace Agenda_Tup_Back.Data.Repository
 
             return newPedido;
         }
-        public void AddProducto(PedidoForUpdate dto)
+        public List<PedidoProducto> AddProducto(PedidoForUpdate dto)
         {
-            var pedido = _context.Pedido.Include(p => p.PedidoProductos).FirstOrDefault(p => p.Id == dto.PedidoId);
-
-            if (pedido != null)
+            try
             {
-                var productos = _context.Producto.Where(p => dto.ProductoId.Contains(p.Id)).ToList();
-
-                foreach (var producto in productos)
+                var newProductos = new List<PedidoProducto>();
+                foreach (var productoId in dto.ProductoId)
                 {
-                    var pedidoProducto = new PedidoProducto
+                    var newProducto = new PedidoProducto
                     {
                         PedidoId = dto.PedidoId,
-                        ProductoId = producto.Id
+                        ProductoId = productoId
                     };
-
-                    pedido.PedidoProductos.Add(pedidoProducto);
+                    _context.PedidoProductos.Add(newProducto);
+                    newProductos.Add(newProducto);
                 }
-
                 _context.SaveChanges();
+
+                return newProductos;
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log the error or rethrow the exception with more details
+                throw new Exception("There was a problem saving changes: " + ex.InnerException.Message);
             }
         }
-
 
 
 

@@ -10,6 +10,8 @@ namespace Agenda_Tup_Back.Profiles
         {
             CreateMap<User, UserForCreation>();
             CreateMap<UserForCreation, User>();
+            CreateMap<User, UserForUpdate>();
+            CreateMap<UserForUpdate, User>();
         }
     }
 }

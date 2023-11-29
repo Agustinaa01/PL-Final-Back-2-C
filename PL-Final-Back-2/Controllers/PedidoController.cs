@@ -117,7 +117,6 @@ namespace Agenda_Tup_Back.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            return Created("Created", dto);
         }
 
         [HttpDelete]

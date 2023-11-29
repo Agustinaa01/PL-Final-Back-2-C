@@ -73,7 +73,8 @@ namespace Agenda_Tup_Back.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
+        [AllowAnonymous]
+
         public IActionResult UpdateProducto(int id, ProductoForCreation dto)
         {
             try

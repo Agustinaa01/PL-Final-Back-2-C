@@ -51,9 +51,11 @@ namespace Agenda_Tup_Back.Data.Repository.Implementations
                 userItem.Password = user.Password;
                 userItem.Email = user.Email;
 
+                _context.User.Update(userItem);
                 _context.SaveChanges();
             }
         }
+
         public void DeleteUsers(int id)
         {
             _context.User.Remove(_context.User.Single(u => u.Id == id));

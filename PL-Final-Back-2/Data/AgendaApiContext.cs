@@ -41,22 +41,17 @@ public class AgendaApiContext : DbContext
             new PedidoProducto { PedidoId = 2, ProductoId = 1 },
             new PedidoProducto { PedidoId = 2, ProductoId = 2 }
         );
-
         modelBuilder.Entity<PedidoProducto>()
     .HasKey(pp => new { pp.PedidoId, pp.ProductoId });
-
         modelBuilder.Entity<PedidoProducto>()
             .HasOne(pp => pp.Pedido)
             .WithMany(p => p.PedidoProductos)
             .HasForeignKey(pp => pp.PedidoId)
             .OnDelete(DeleteBehavior.Restrict);
-
         modelBuilder.Entity<PedidoProducto>()
             .HasOne(pp => pp.Producto)
             .WithMany(p => p.PedidoProductos)
             .HasForeignKey(pp => pp.ProductoId);
-
-
         base.OnModelCreating(modelBuilder);
     }
 }

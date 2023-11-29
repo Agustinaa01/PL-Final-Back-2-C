@@ -63,18 +63,12 @@ namespace Agenda_Tup_Back.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
-        public IActionResult UpdateUser(int id, UserForCreation dto)
+        [AllowAnonymous]
+
+        public IActionResult UpdateUser(int id, UserForUpdate dto)
         {
             try
             {
-                var user = _mapper.Map<User>(dto);
-
-                if (id != user.Id)
-                {
-                    return BadRequest("The provided ID in the request body does not match the ID in the URL.");
-                }
-
                 var userItem = _userRepository.GetUserById(id);
 
                 if (userItem == null)
@@ -82,7 +76,16 @@ namespace Agenda_Tup_Back.Controllers
                     return NotFound("Product not found with the specified ID.");
                 }
 
-                _userRepository.UpdateUser(user);
+                if (id != dto.Id)
+                {
+                    return BadRequest("The provided ID in the request body does not match the ID in the URL.");
+                }
+
+                userItem.Name = dto.Name;
+                userItem.Password = dto.Password;
+                userItem.Email = dto.Email;
+
+                _userRepository.UpdateUser(userItem);
 
                 var userModificado = _userRepository.GetUserById(id);
 
@@ -95,6 +98,7 @@ namespace Agenda_Tup_Back.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         [HttpDelete]
         [Route("{Id}")]
