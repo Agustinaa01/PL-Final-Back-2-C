@@ -53,7 +53,7 @@ namespace Agenda_Tup_Back.Data.Repository
 
             return newPedido;
         }
-        public List<PedidoProducto> AddProducto(PedidoForUpdate dto)
+        public List<PedidoProducto> AddProducto(PedidoForProducto dto)
         {
             try
             {
@@ -78,7 +78,46 @@ namespace Agenda_Tup_Back.Data.Repository
                 throw new Exception("There was a problem saving changes: " + ex.InnerException.Message);
             }
         }
+        public void UpdatePedido(PedidoForUpdate dto)
+        {
+            var pedidoItem = _context.Pedido.Include(p => p.PedidoProductos)
+                                            .ThenInclude(pp => pp.Producto)
+                                            .FirstOrDefault(x => x.Id == dto.Id);
 
+            if (pedidoItem != null)
+            {
+                pedidoItem.Date = dto.Date;
+                pedidoItem.State = dto.State;
+
+                // Obtener los productos existentes
+                var existingProducts = pedidoItem.PedidoProductos.ToList();
+
+                // Eliminar los productos existentes que no están en el nuevo listado
+                foreach (var existingProduct in existingProducts)
+                {
+                    if (!dto.ProductoId.Contains(existingProduct.ProductoId))
+                    {
+                        _context.Entry(existingProduct).State = EntityState.Deleted;
+                    }
+                }
+
+                // Agregar los nuevos productos que no estaban antes
+                foreach (var productoId in dto.ProductoId)
+                {
+                    if (!existingProducts.Any(ep => ep.ProductoId == productoId))
+                    {
+                        var producto = _context.Producto.Find(productoId);
+                        if (producto != null)
+                        {
+                            var newPedidoProducto = new PedidoProducto { PedidoId = pedidoItem.Id, ProductoId = productoId };
+                            _context.Entry(newPedidoProducto).State = EntityState.Added;
+                        }
+                    }
+                }
+                _context.Pedido.Update(pedidoItem); 
+                _context.SaveChanges();
+            }
+        }
 
 
 

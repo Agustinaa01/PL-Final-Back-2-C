@@ -8,10 +8,12 @@ namespace Agenda_Tup_Back.Profiles
     {
         public PedidoProfile()
         {
+            CreateMap<Pedido, PedidoForUpdate>();
+            CreateMap<PedidoForUpdate, Pedido>();
             CreateMap<Pedido, PedidoForCreation>();
             CreateMap<PedidoForCreation, Pedido>();
-            CreateMap<PedidoProducto, PedidoForUpdate>();
-            CreateMap<PedidoForUpdate, PedidoProducto>();
+            CreateMap<PedidoProducto, PedidoForProducto>();
+            CreateMap<PedidoForProducto, PedidoProducto>();
             CreateMap<PedidoProducto, PedidoProductoDto>();
             CreateMap<Pedido, PedidoDto>()
                 .ForMember(dest => dest.PedidoProductos, opt => opt.MapFrom(src => src.PedidoProductos));

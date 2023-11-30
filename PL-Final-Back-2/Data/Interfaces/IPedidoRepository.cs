@@ -13,7 +13,8 @@ namespace Agenda_Tup_Back.Data.Interfaces
         public List<PedidoDto>? GetPedidosByUserId(int Id);
 
         public Pedido CreatePedido(PedidoForCreation dto);
-        public List<PedidoProducto> AddProducto(PedidoForUpdate dto);
+        public List<PedidoProducto> AddProducto(PedidoForProducto dto);
+        public void UpdatePedido(PedidoForUpdate dto);
         public void DeletePedido(int id);
        
 

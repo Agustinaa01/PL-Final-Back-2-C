@@ -2,7 +2,9 @@
 
 using Agenda_Tup_Back.Data.DTO;
 using Agenda_Tup_Back.Data.Interfaces;
+using Agenda_Tup_Back.Data.Repository;
 using Agenda_Tup_Back.Data.Repository.Implementations;
+using Agenda_Tup_Back.DTO;
 using Agenda_Tup_Back.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -24,12 +26,7 @@ namespace Agenda_Tup_Back.Controllers
             _pedidoRepository = pedidoRepository;
             _mapper = mapper;
         }
-        //[HttpGet]
-        //public IActionResult GetAllPedido()
-        //{
-        //    int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);
-        //    return Ok(_pedidoRepository.GetAllPedido(userId));
-
+        
         [HttpGet("pedido")]
         public IActionResult GetAllPedido()
         {
@@ -106,7 +103,7 @@ namespace Agenda_Tup_Back.Controllers
 
 
         [HttpPost("AddProducto")]
-        public IActionResult AddProducto(PedidoForUpdate dto)
+        public IActionResult AddProducto(PedidoForProducto dto)
         {
             try
             {
@@ -118,6 +115,39 @@ namespace Agenda_Tup_Back.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPut("{id}")]
+        [AllowAnonymous]
+        public IActionResult UpdatePedido(int id, PedidoForUpdate dto)
+        {
+            try
+            {
+                var pedido = _mapper.Map<Pedido>(dto);
+
+                if (id != pedido.Id)
+                {
+                    return BadRequest("El ID proporcionado en el cuerpo de la solicitud no coincide con el ID en la URL.");
+                }
+
+                var pedidoItem = _pedidoRepository.GetPedido(id);
+
+                if (pedidoItem == null)
+                {
+                    return NotFound("Pedido no encontrado con el ID especificado.");
+                }
+                _pedidoRepository.UpdatePedido(dto);
+
+                var pedidoModificado = _pedidoRepository.GetPedido(id);
+
+                var pedidoModificadoDto = _mapper.Map<PedidoForUpdate>(pedidoModificado);
+
+                return Ok(pedidoModificadoDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         [HttpDelete]
         [Route("{Id}")]
