@@ -7,7 +7,7 @@ namespace Agenda_Tup_Back.Data.Interfaces
 {
     public interface IPedidoRepository
     {
-        public List<Pedido> GetAllPedido(int id);
+        public List<PedidoDto> GetAllPedido(int id);
         //public List<Pedido> GetAllPedido(int id);
         public Pedido? GetPedido(int id);
         public List<PedidoDto>? GetPedidosByUserId(int Id);

@@ -22,11 +22,14 @@ namespace Agenda_Tup_Back.Data.Repository
             _context = context;
             _mapper = autoMapper;
         }
-        public List<Pedido> GetAllPedido(int id)
+        public List<PedidoDto> GetAllPedido(int id)
         {
-            var pedido = _context.Pedido
+            var pedidos = _context.Pedido
+                .Include(p => p.PedidoProductos)
+                    .ThenInclude(pp => pp.Producto) // Include the related Producto entity
                 .ToList();
-            return pedido;
+
+            return _mapper.Map<List<PedidoDto>>(pedidos);
         }
 
         public List<PedidoDto> GetPedidosByUserId(int userId)
