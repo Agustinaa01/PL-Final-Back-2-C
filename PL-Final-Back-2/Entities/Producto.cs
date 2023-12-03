@@ -10,12 +10,13 @@ namespace Agenda_Tup_Back.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Price { get; set; }
+        public double Price { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
         public string Brand { get; set; }
 
         public string ImageUrl { get; set; }
+        public int Quantity { get; set; }
         public State state { get; set; } = State.Active;
 
         // This should be a collection of PedidoProducto

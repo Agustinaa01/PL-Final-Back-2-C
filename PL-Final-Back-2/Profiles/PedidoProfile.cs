@@ -12,8 +12,14 @@ namespace Agenda_Tup_Back.Profiles
             CreateMap<PedidoForUpdate, Pedido>();
             CreateMap<Pedido, PedidoForCreation>();
             CreateMap<PedidoForCreation, Pedido>();
+            CreateMap<PedidoProducto, PedidoProductoGetDto>();
             CreateMap<PedidoProducto, PedidoForProducto>();
             CreateMap<PedidoForProducto, PedidoProducto>();
+            CreateMap<PedidoProducto, PedidoProductoForUpdate>().ReverseMap();
+            CreateMap<Pedido, PedidoForUpdate>()
+                .ForMember(dest => dest.PedidoProductos, opt => opt.MapFrom(src => src.PedidoProductos))
+                .ReverseMap();
+
             CreateMap<PedidoProducto, PedidoProductoDto>();
             CreateMap<Pedido, PedidoDto>()
                 .ForMember(dest => dest.PedidoProductos, opt => opt.MapFrom(src => src.PedidoProductos));

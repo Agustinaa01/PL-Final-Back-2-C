@@ -7,8 +7,7 @@
         public string State { get; set; }
         public int UserId { get; set; }
 
-        // This should be a collection of ProductoDto
-        public ICollection<PedidoProductoDto> PedidoProductos { get; set; } = new List<PedidoProductoDto>();
+        public ICollection<PedidoProductoGetDto> PedidoProductos { get; set; } = new List<PedidoProductoGetDto>();
     }
 
 }

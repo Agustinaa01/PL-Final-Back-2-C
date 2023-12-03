@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PLFinalBack2.Migrations
 {
     [DbContext(typeof(AgendaApiContext))]
-    [Migration("20231128173219_initial")]
+    [Migration("20231202174655_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -73,6 +73,9 @@ namespace PLFinalBack2.Migrations
                     b.Property<int>("ProductoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
                     b.HasKey("PedidoId", "ProductoId");
 
                     b.HasIndex("ProductoId");
@@ -83,22 +86,26 @@ namespace PLFinalBack2.Migrations
                         new
                         {
                             PedidoId = 1,
-                            ProductoId = 1
+                            ProductoId = 1,
+                            Cantidad = 0
                         },
                         new
                         {
                             PedidoId = 1,
-                            ProductoId = 2
+                            ProductoId = 2,
+                            Cantidad = 0
                         },
                         new
                         {
                             PedidoId = 2,
-                            ProductoId = 1
+                            ProductoId = 1,
+                            Cantidad = 0
                         },
                         new
                         {
                             PedidoId = 2,
-                            ProductoId = 2
+                            ProductoId = 2,
+                            Cantidad = 0
                         });
                 });
 
@@ -130,7 +137,10 @@ namespace PLFinalBack2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Price")
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<int>("state")
@@ -149,7 +159,8 @@ namespace PLFinalBack2.Migrations
                             Description = "gagagagab",
                             ImageUrl = "https://i.pinimg.com/564x/5a/62/1e/5a621e11a8cc9fd152d6805cd5f67724.jpg",
                             Name = "Computadora",
-                            Price = 1515,
+                            Price = 1515.0,
+                            Quantity = 0,
                             state = 0
                         },
                         new
@@ -160,7 +171,8 @@ namespace PLFinalBack2.Migrations
                             Description = "gagagagab",
                             ImageUrl = "https://i.pinimg.com/564x/f2/99/42/f29942dc13ba97a29d27ff47f83ec36e.jpg",
                             Name = "Auriculares",
-                            Price = 1545,
+                            Price = 1545.0,
+                            Quantity = 0,
                             state = 0
                         });
                 });
@@ -258,7 +270,7 @@ namespace PLFinalBack2.Migrations
                     b.HasOne("Agenda_Tup_Back.Entities.Pedido", "Pedido")
                         .WithMany("PedidoProductos")
                         .HasForeignKey("PedidoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Agenda_Tup_Back.Entities.Producto", "Producto")

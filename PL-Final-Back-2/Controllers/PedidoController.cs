@@ -151,7 +151,7 @@ namespace Agenda_Tup_Back.Controllers
 
         [HttpDelete]
         [Route("{Id}")]
-        public IActionResult DeleteContactsById(int Id)
+        public IActionResult DeletePedidoById(int Id)
         {
             try
             {

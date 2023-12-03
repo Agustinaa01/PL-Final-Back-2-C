@@ -20,11 +20,12 @@ namespace PLFinalBack2.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
                     state = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -75,7 +76,8 @@ namespace PLFinalBack2.Migrations
                 columns: table => new
                 {
                     PedidoId = table.Column<int>(type: "int", nullable: false),
-                    ProductoId = table.Column<int>(type: "int", nullable: false)
+                    ProductoId = table.Column<int>(type: "int", nullable: false),
+                    Cantidad = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,7 +87,7 @@ namespace PLFinalBack2.Migrations
                         column: x => x.PedidoId,
                         principalTable: "Pedido",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PedidoProductos_Producto_ProductoId",
                         column: x => x.ProductoId,
@@ -96,11 +98,11 @@ namespace PLFinalBack2.Migrations
 
             migrationBuilder.InsertData(
                 table: "Producto",
-                columns: new[] { "Id", "Brand", "Category", "Description", "ImageUrl", "Name", "Price", "state" },
+                columns: new[] { "Id", "Brand", "Category", "Description", "ImageUrl", "Name", "Price", "Quantity", "state" },
                 values: new object[,]
                 {
-                    { 1, "HP", "Computadora", "gagagagab", "https://i.pinimg.com/564x/5a/62/1e/5a621e11a8cc9fd152d6805cd5f67724.jpg", "Computadora", 1515, 0 },
-                    { 2, "HP", "Auriculares", "gagagagab", "https://i.pinimg.com/564x/f2/99/42/f29942dc13ba97a29d27ff47f83ec36e.jpg", "Auriculares", 1545, 0 }
+                    { 1, "HP", "Computadora", "gagagagab", "https://i.pinimg.com/564x/5a/62/1e/5a621e11a8cc9fd152d6805cd5f67724.jpg", "Computadora", 1515.0, 0, 0 },
+                    { 2, "HP", "Auriculares", "gagagagab", "https://i.pinimg.com/564x/f2/99/42/f29942dc13ba97a29d27ff47f83ec36e.jpg", "Auriculares", 1545.0, 0, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -126,13 +128,13 @@ namespace PLFinalBack2.Migrations
 
             migrationBuilder.InsertData(
                 table: "PedidoProductos",
-                columns: new[] { "PedidoId", "ProductoId" },
+                columns: new[] { "PedidoId", "ProductoId", "Cantidad" },
                 values: new object[,]
                 {
-                    { 1, 1 },
-                    { 1, 2 },
-                    { 2, 1 },
-                    { 2, 2 }
+                    { 1, 1, 0 },
+                    { 1, 2, 0 },
+                    { 2, 1, 0 },
+                    { 2, 2, 0 }
                 });
 
             migrationBuilder.CreateIndex(

@@ -8,7 +8,7 @@ namespace Agenda_Tup_Back.Data.DTO
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public string State { get; set; }
-        public List<int> ProductoId { get; set; }
+        public List<PedidoProductoForUpdate> PedidoProductos { get; set; }
     }
 
 

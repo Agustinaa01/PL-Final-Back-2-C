@@ -6,6 +6,7 @@ namespace Agenda_Tup_Back.Data.DTO
     {
         public int PedidoId { get; set; }
         public List<int> ProductoId { get; set; }
-
+        public List<int> Cantidad { get; set; } // Aquí agregamos la lista de cantidades
     }
+
 }

@@ -36,12 +36,13 @@ namespace Agenda_Tup_Back.Data.Repository
         {
             var pedidos = _context.Pedido
                 .Include(p => p.PedidoProductos)
-                    .ThenInclude(pp => pp.Producto) // Include the related Producto entity
+                    .ThenInclude(pp => pp.Producto)
                 .Where(p => p.UserId == userId)
                 .ToList();
 
             return _mapper.Map<List<PedidoDto>>(pedidos);
         }
+
 
         public Pedido? GetPedido(int id)
         {
@@ -61,12 +62,13 @@ namespace Agenda_Tup_Back.Data.Repository
             try
             {
                 var newProductos = new List<PedidoProducto>();
-                foreach (var productoId in dto.ProductoId)
+                for (int i = 0; i < dto.ProductoId.Count; i++)
                 {
                     var newProducto = new PedidoProducto
                     {
                         PedidoId = dto.PedidoId,
-                        ProductoId = productoId
+                        ProductoId = dto.ProductoId[i],
+                        Cantidad = dto.Cantidad[i] 
                     };
                     _context.PedidoProductos.Add(newProducto);
                     newProductos.Add(newProducto);
@@ -81,6 +83,7 @@ namespace Agenda_Tup_Back.Data.Repository
                 throw new Exception("There was a problem saving changes: " + ex.InnerException.Message);
             }
         }
+
         public void UpdatePedido(PedidoForUpdate dto)
         {
             var pedidoItem = _context.Pedido.Include(p => p.PedidoProductos)
@@ -98,40 +101,56 @@ namespace Agenda_Tup_Back.Data.Repository
                 // Eliminar los productos existentes que no están en el nuevo listado
                 foreach (var existingProduct in existingProducts)
                 {
-                    if (!dto.ProductoId.Contains(existingProduct.ProductoId))
+                    if (!dto.PedidoProductos.Any(p => p.ProductoId == existingProduct.ProductoId))
                     {
                         _context.Entry(existingProduct).State = EntityState.Deleted;
                     }
                 }
 
-                // Agregar los nuevos productos que no estaban antes
-                foreach (var productoId in dto.ProductoId)
+                // Actualizar o agregar los nuevos productos
+                foreach (var productoDto in dto.PedidoProductos)
                 {
-                    if (!existingProducts.Any(ep => ep.ProductoId == productoId))
+                    var existingProduct = existingProducts.FirstOrDefault(ep => ep.ProductoId == productoDto.ProductoId);
+                    if (existingProduct != null)
                     {
-                        var producto = _context.Producto.Find(productoId);
+                        // Actualizar la cantidad si el producto ya existe
+                        existingProduct.Cantidad = productoDto.Cantidad;
+                        _context.Entry(existingProduct).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        // Agregar el producto si no existía antes
+                        var producto = _context.Producto.Find(productoDto.ProductoId);
                         if (producto != null)
                         {
-                            var newPedidoProducto = new PedidoProducto { PedidoId = pedidoItem.Id, ProductoId = productoId };
+                            var newPedidoProducto = new PedidoProducto { PedidoId = pedidoItem.Id, ProductoId = productoDto.ProductoId, Cantidad = productoDto.Cantidad };
                             _context.Entry(newPedidoProducto).State = EntityState.Added;
                         }
                     }
                 }
-                _context.Pedido.Update(pedidoItem); 
+                _context.Pedido.Update(pedidoItem);
                 _context.SaveChanges();
             }
         }
 
 
 
+
         public void DeletePedido(int Id)
         {
-            var pedido = _context.Pedido.Single(c => c.Id == Id);
+            // Find the Pedido with the given Id
+            var pedido = _context.Pedido.Include(p => p.PedidoProductos).Single(u => u.Id == Id);
 
+            // Remove all related PedidoProducto entities
+            _context.PedidoProductos.RemoveRange(pedido.PedidoProductos);
+
+            // Remove the Pedido
             _context.Pedido.Remove(pedido);
 
+            // Save changes
             _context.SaveChanges();
         }
+
 
 
     }
