@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\agust\\source\\repos\\PL-Final-Back-2\\PL-Final-Back-2\\PL-Final-Back-2.csproj": {}
+    "c:\\Users\\Usuario\\Desktop\\Tp Proyecto final\\PL-Final-Back-2-C\\PL-Final-Back-2\\PL-Final-Back-2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\agust\\source\\repos\\PL-Final-Back-2\\PL-Final-Back-2\\PL-Final-Back-2.csproj": {
+    "c:\\Users\\Usuario\\Desktop\\Tp Proyecto final\\PL-Final-Back-2-C\\PL-Final-Back-2\\PL-Final-Back-2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\agust\\source\\repos\\PL-Final-Back-2\\PL-Final-Back-2\\PL-Final-Back-2.csproj",
+        "projectUniqueName": "c:\\Users\\Usuario\\Desktop\\Tp Proyecto final\\PL-Final-Back-2-C\\PL-Final-Back-2\\PL-Final-Back-2.csproj",
         "projectName": "PL-Final-Back-2",
-        "projectPath": "C:\\Users\\agust\\source\\repos\\PL-Final-Back-2\\PL-Final-Back-2\\PL-Final-Back-2.csproj",
-        "packagesPath": "C:\\Users\\agust\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\agust\\source\\repos\\PL-Final-Back-2\\PL-Final-Back-2\\obj\\",
+        "projectPath": "c:\\Users\\Usuario\\Desktop\\Tp Proyecto final\\PL-Final-Back-2-C\\PL-Final-Back-2\\PL-Final-Back-2.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\Usuario\\Desktop\\Tp Proyecto final\\PL-Final-Back-2-C\\PL-Final-Back-2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\agust\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -94,6 +92,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.25, 6.0.25]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[6.0.25, 6.0.25]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.25, 6.0.25]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.25, 6.0.25]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"

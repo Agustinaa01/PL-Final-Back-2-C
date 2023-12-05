@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe de Reservas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Trabajo Práctico Integrador - Proyecto de Laboratorio</h1>
+    <h2>EvoTech</h2>
+    <h3>Integrantes del Grupo:</h3>
+    <ul>
+        <li>Agustina Serra</li>
+        <li>Brenda Ahumada</li>
+        <li>Luciano Pilot</li>
+    </ul>
+
+    <h2>Informe de Pedidos del día: @Pedido.Date</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Usuario</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Estado</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pedido in Entities.Pedido)
+            {
+            <tr>
+                <tr>
+                    <td>@pedido.Id</td>
+                    <td>@pedido.Date.ToString("yyyy-MM-dd")</td>
+                    <td>@pedido.User.Name</td>
+                </tr>
+                <td>
+                    <ul>
+                        @foreach (var pedidoProducto in Entities.PedidoProductos)
+                        {
+                            <li>@pedidoProducto.Producto</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var pedidoProducto in Entities.PedidoProductos)
+                        {
+                            <li>@pedidoProducto.Cantidad</li>
+                        }
+                    </ul>
+                </td>
+                <td>@pedido.State</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

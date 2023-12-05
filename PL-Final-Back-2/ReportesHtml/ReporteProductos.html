@@ -32,36 +32,44 @@
     </style>
 </head>
 <body>
-    <h1>Trabajo Pr�ctico Integrador - Proyecto de Laboratorio</h1>
-    <h2>Sport&Joy</h2>
+    <h1>Trabajo Práctico Integrador - Proyecto de Laboratorio</h1>
+    <h2>EvoTech</h2>
     <h3>Integrantes del Grupo:</h3>
     <ul>
-        <li>Lucila Ansaldi</li>
-        <li>Sebasti�n Comparada</li>
-        <li>Olivia Luciano</li>
-        <li>Victoria Svaikauskas</li>
+        <li>Agustina Serra</li>
+        <li>Brenda Ahumada</li>
+        <li>Luciano Pilot</li>
     </ul>
 
-    <h2>Informe de Reservas - Mes: @Model.Month</h2>
-    <p>Listado de todas las reservas hechas en el mes @Model.Month .</p>
+    <h2>Informe de Inventario de Productos</h2>
 
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Fecha</th>
-                <th>Usuario</th>
-                <th>Cancha</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Descripción</th>
+                <th>Categoría</th>
+                <th>Marca</th>
+                <th>Cantidad</th>
+                <th>Estado</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var reservation in Model.Reservations)
+            @foreach (var producto in Entities.Producto)
             {
             <tr>
-                <td>@reservation.Id</td>
-                <td>@reservation.Date.ToString("yyyy-MM-dd")</td>
-                <td>@reservation.User.FirstName @reservation.User.LastName</td>
-                <td>@reservation.Field.Name</td>
+                <tr>
+                    <td>@producto.Id</td>
+                    <td>@producto.Name</td>
+                    <td>@producto.Price</td>
+                    <td>@producto.Description</td>
+                    <td>@producto.Category</td>
+                    <td>@producto.Brand</td>
+                    <td>@producto.Quantity</td>
+                    <td>@producto.State</td>
+                </tr>
             </tr>
             }
         </tbody>
